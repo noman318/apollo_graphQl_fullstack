@@ -1,11 +1,13 @@
 import { prismaClient } from "../lib/db";
 
 type UserInput = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  password: string;
+  input: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    username: string;
+    password: string;
+  };
 };
 const resolvers = {
   Query: {
@@ -13,8 +15,7 @@ const resolvers = {
   },
   Mutation: {
     createUser: async (_: any, args: UserInput) => {
-      console.log("args", args);
-      //@ts-expect-error
+      console.log("args", args.input);
       const { firstName, lastName, email, username, password } = args.input;
       // console.log("firstName", firstName);
 
