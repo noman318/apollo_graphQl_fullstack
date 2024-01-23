@@ -29,4 +29,20 @@ const createUser = async (_: any, args: UserInput) => {
   return user;
 };
 
-export { createUser };
+const getUserById = async (_: any, args: String) => {
+  console.log("args", args);
+  // return;
+  const user = await prismaClient.user.findUnique({
+    where: {
+      //@ts-expect-error
+      id: args.id,
+    },
+  });
+  return user;
+};
+const getUsers = async (_: any, args: String) => {
+  const users = await prismaClient.user.findMany();
+  // console.log("users", users);
+  return users;
+};
+export { createUser, getUserById, getUsers };
