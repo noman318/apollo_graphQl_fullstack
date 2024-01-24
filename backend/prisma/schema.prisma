@@ -17,7 +17,26 @@ model User {
   lastName    String? @map("last_name")
   username    String @map("user_name")
   profileImageUrl   String? @map("profile_image_url")
-  password String
+  password    String
+  projects    Project[] 
 
   @@map("users")
+}
+
+model Project {
+  id           String   @id @default(uuid())
+  name         String   @map("project_name")
+  description  String
+  status       ProjectStatus   @map("project_status")
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+
+  @@map("projects")
+}
+
+
+enum ProjectStatus {
+  NotStarted
+  InProgress
+  Completed
 }

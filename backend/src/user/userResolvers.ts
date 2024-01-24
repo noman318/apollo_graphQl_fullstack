@@ -23,7 +23,7 @@ const createUser = async (_: any, args: UserInput) => {
   // console.log("args", args.input);
   const { firstName, lastName, email, username, password } = args.input;
   // console.log("firstName", firstName);
-  console.log("process.env.SECRET", process.env.SECRET);
+  // console.log("process.env.SECRET", process.env.SECRET);
   const hashedPassword = createHmac("sha256", String(process.env.SECRET))
     .update(password)
     .digest("hex");

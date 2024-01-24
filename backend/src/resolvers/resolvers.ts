@@ -1,3 +1,4 @@
+import { createProject } from "../project/projectResolver";
 import {
   createUser,
   getUserById,
@@ -13,6 +14,7 @@ const resolvers = {
   },
   Mutation: {
     createUser,
+    createProject,
   },
 };
 export default resolvers;
