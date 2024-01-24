@@ -18,9 +18,15 @@ const userTypeDefs = `
     password: String!
   }
 
+    input UserCredentials {
+    email: String!
+    password: String!
+  }
+
   type Query {
     getUsers: [User]
     getUserById(id: ID!): User
+    loginUser(input:UserCredentials!):String
   }
 
   type Mutation {
