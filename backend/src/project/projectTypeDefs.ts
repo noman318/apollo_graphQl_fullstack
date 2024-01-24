@@ -4,7 +4,7 @@ const projectTypeDefs = `
     name: String!
     status: String!
     description: String
-    userId: ID!
+    user: User
   }
 
   input ProjectInput {

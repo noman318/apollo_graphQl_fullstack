@@ -1,4 +1,8 @@
-import { createProject } from "../project/projectResolver";
+import {
+  createProject,
+  getProjectById,
+  getProjects,
+} from "../project/projectResolver";
 import {
   createUser,
   getUserById,
@@ -11,6 +15,8 @@ const resolvers = {
     getUserById,
     getUsers,
     loginUser,
+    getProjects,
+    getProjectById,
   },
   Mutation: {
     createUser,

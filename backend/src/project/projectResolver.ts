@@ -36,4 +36,23 @@ const createProject = async (_: any, args: ProjectInput) => {
   }
 };
 
-export { createProject };
+const getProjects = async () => {
+  const projectsWithUserData = await prismaClient.project.findMany({
+    include: {
+      user: true, // Include all fields from the User model
+    },
+  });
+  console.log("projectsWithUserData", projectsWithUserData);
+
+  return projectsWithUserData;
+};
+
+const getProjectById = async (_: any, args: string) => {
+  const project = await prismaClient.project.findUnique({
+    //@ts-expect-error
+    where: { id: args.id },
+  });
+  return project;
+};
+
+export { createProject, getProjects, getProjectById };
