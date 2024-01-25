@@ -51,6 +51,7 @@ const getProjectById = async (_: any, args: string) => {
   const project = await prismaClient.project.findUnique({
     //@ts-expect-error
     where: { id: args.id },
+    include: { user: true },
   });
   return project;
 };
