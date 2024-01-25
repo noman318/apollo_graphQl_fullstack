@@ -1,10 +1,11 @@
 import React from "react";
+import { Container } from "react-bootstrap";
 
 const RegisterScreen = () => {
   return (
-    <div>
+    <Container>
       <h1>Sign Up</h1>
-    </div>
+    </Container>
   );
 };
 
