@@ -5,12 +5,12 @@ const Header = () => {
   return (
     <nav className="navbar bg-light mb-4 p-0">
       <div className="container">
-        <a className="navbar-brand" href="/">
+        <Link className="navbar-brand" to="/">
           <div className="d-flex">
             {/* <img src={logo} alt="logo" className="mr-2" /> */}
             <div>Project Mgmt</div>
           </div>
-        </a>
+        </Link>
 
         {/* <button
           type="button"
@@ -23,10 +23,10 @@ const Header = () => {
         </button> */}
 
         <div style={{ float: "right", marginRight: "10%" }}>
-          <a style={{ marginRight: "10px" }} to={`/login`}>
+          <Link style={{ marginRight: "10px" }} to={`/login`}>
             Login
-          </a>
-          <a to={`/register`}>Register</a>
+          </Link>
+          <Link to={`/register`}>Register</Link>
         </div>
       </div>
     </nav>
