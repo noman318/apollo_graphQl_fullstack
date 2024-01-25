@@ -10,6 +10,7 @@ type UserInput = {
     email: string;
     username: string;
     password: string;
+    age?: number;
   };
 };
 
@@ -17,6 +18,18 @@ type Login = {
   input: {
     email: string;
     password: string;
+  };
+};
+
+type ProjectUpdateInput = {
+  id: string;
+  input: {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    username?: string;
+    age?: number;
+    password?: string;
   };
 };
 
@@ -28,7 +41,7 @@ const createUser = async (_: any, args: UserInput) => {
   const hashedPassword = createHmac("sha256", String(process.env.SECRET))
     .update(password)
     .digest("hex");
-  console.log("hashedPassword", hashedPassword);
+  // console.log("hashedPassword", hashedPassword);
 
   const user = await prismaClient.user.create({
     data: {
@@ -107,6 +120,23 @@ const deleteUser = async (_: any, args: { input: string }, context: any) => {
   const { count } = deletedUsers;
   return count;
 };
+
+const updateUser = async (_: any, args: ProjectUpdateInput, context: any) => {
+  const { id } = args;
+  const { firstName, lastName, age, email, username } = args.input;
+  checkAuthorization(context);
+  const updatedUser = await prismaClient.user.update({
+    where: { id },
+    data: {
+      firstName,
+      lastName,
+      age,
+      email,
+      username,
+    },
+  });
+  return updatedUser;
+};
 export {
   createUser,
   getUserById,
@@ -114,4 +144,5 @@ export {
   loginUser,
   deleteUser,
   getCurrentUser,
+  updateUser,
 };

@@ -34,9 +34,6 @@ async function startServer() {
     expressMiddleware(server, {
       context: async ({ req }) => {
         const token = req.headers.token;
-        if (!token) {
-          throw new Error("Unauthorized: Token missing");
-        }
         try {
           const decodedToken = JWT.verify(
             token as string | "",

@@ -8,6 +8,7 @@ const userTypeDefs = `
     password: String!
     profileImageUrl: String
     token: String
+    age: Int
   }
 
   type LoginUser {
@@ -23,9 +24,19 @@ const userTypeDefs = `
     email: String!
     username: String!
     password: String!
+    age: Int
   }
 
-    input UserCredentials {
+  input UserUpdateInput {
+    firstName: String
+    lastName: String
+    age: Int
+    email: String
+    username: String
+    password: String
+  }
+
+  input UserCredentials {
     email: String!
     password: String!
   }
@@ -40,6 +51,7 @@ const userTypeDefs = `
   type Mutation {
     createUser(input: UserInput!): User
     deleteUser(input: String!): Int
+    updateUser(id:ID!,input: UserUpdateInput): User
   }
 `;
 

@@ -11,6 +11,7 @@ import {
   getUsers,
   loginUser,
   getCurrentUser,
+  updateUser,
 } from "../user/userResolvers";
 
 const resolvers = {
@@ -24,6 +25,7 @@ const resolvers = {
   },
   Mutation: {
     createUser,
+    updateUser,
     createProject,
     deleteUser,
     updateProject,
