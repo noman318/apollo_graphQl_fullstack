@@ -27,7 +27,7 @@ model Project {
   id           String   @id @default(uuid())
   name         String   @map("project_name")
   description  String
-  status       ProjectStatus   @map("project_status")
+  status       ProjectStatus   @map("project_status") @default(NotStarted)
   userId       String
   user         User     @relation(fields: [userId], references: [id])
 
