@@ -5,6 +5,7 @@ import {
 } from "../project/projectResolver";
 import {
   createUser,
+  deleteUser,
   getUserById,
   getUsers,
   loginUser,
@@ -21,6 +22,7 @@ const resolvers = {
   Mutation: {
     createUser,
     createProject,
+    deleteUser,
   },
 };
 export default resolvers;

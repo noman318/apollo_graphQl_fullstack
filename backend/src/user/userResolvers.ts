@@ -86,4 +86,17 @@ const getUsers = async (_: any, args: String) => {
   // console.log("users", users);
   return users;
 };
-export { createUser, getUserById, getUsers, loginUser };
+
+const deleteUser = async (_: any, args: Login) => {
+  const { input } = args;
+  console.log("input", input);
+
+  const deletedUsers = await prismaClient.user.deleteMany({
+    //@ts-expect-error
+    where: { password: input },
+  });
+  // console.log("deletedUsers", deletedUsers.count);
+  const { count } = deletedUsers;
+  return count;
+};
+export { createUser, getUserById, getUsers, loginUser, deleteUser };
