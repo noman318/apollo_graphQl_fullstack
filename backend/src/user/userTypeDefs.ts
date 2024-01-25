@@ -10,6 +10,13 @@ const userTypeDefs = `
     token: String
   }
 
+  type LoginUser {
+    id: ID
+    firstName: String
+    lastName: String
+    email: String
+  }
+
   input UserInput {
     firstName: String!
     lastName: String!
@@ -27,6 +34,7 @@ const userTypeDefs = `
     getUsers: [User]
     getUserById(id: ID!): User
     loginUser(input:UserCredentials!):String
+    getCurrentUser: LoginUser
   }
 
   type Mutation {

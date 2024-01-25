@@ -1,6 +1,7 @@
 import { createHmac } from "node:crypto";
 import { prismaClient } from "../lib/db";
 import jwt from "jsonwebtoken";
+import checkAuthorization from "../middleware/authentication";
 
 type UserInput = {
   input: {
@@ -60,7 +61,7 @@ const loginUser = async (_: any, args: Login) => {
     const token = jwt.sign(
       {
         id: user.id,
-        firstname: user.firstName,
+        firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
       },
@@ -70,12 +71,11 @@ const loginUser = async (_: any, args: Login) => {
   }
 };
 
-const getUserById = async (_: any, args: String) => {
-  console.log("args", args);
-  // return;
+const getUserById = async (_: any, args: { id: string }, context: any) => {
+  // console.log("args", args);
+  // console.log("context", context);
   const user = await prismaClient.user.findUnique({
     where: {
-      //@ts-expect-error
       id: args.id,
     },
   });
@@ -87,16 +87,31 @@ const getUsers = async (_: any, args: String) => {
   return users;
 };
 
-const deleteUser = async (_: any, args: Login) => {
-  const { input } = args;
-  console.log("input", input);
+const getCurrentUser = async (_: any, args: any, context: any) => {
+  // console.log("context", context);
+  if (context) {
+    return context;
+  } else {
+    throw new Error("Unauthorized User");
+  }
+};
 
+const deleteUser = async (_: any, args: { input: string }, context: any) => {
+  const { input } = args;
+  // console.log("input", input);
+  checkAuthorization(context);
   const deletedUsers = await prismaClient.user.deleteMany({
-    //@ts-expect-error
     where: { password: input },
   });
   // console.log("deletedUsers", deletedUsers.count);
   const { count } = deletedUsers;
   return count;
 };
-export { createUser, getUserById, getUsers, loginUser, deleteUser };
+export {
+  createUser,
+  getUserById,
+  getUsers,
+  loginUser,
+  deleteUser,
+  getCurrentUser,
+};

@@ -14,6 +14,13 @@ const projectTypeDefs = `
     userId: ID!
   }
 
+  input ProjectUpdateInput {
+    name: String
+    status: String
+    description: String
+    userId: ID!
+  }
+
   type Query {
     getProjects: [Project]
     getProjectById(id: ID!): Project
@@ -21,6 +28,7 @@ const projectTypeDefs = `
 
   type Mutation {
     createProject(input: ProjectInput!): Project
+    updateProject(id:ID!,input: ProjectUpdateInput): Project
   }
 `;
 

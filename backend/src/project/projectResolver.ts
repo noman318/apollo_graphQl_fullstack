@@ -1,11 +1,22 @@
 import { prismaClient } from "../lib/db";
 import { ProjectStatus } from "@prisma/client";
+import checkAuthorization from "../middleware/authentication";
 
 type ProjectInput = {
   input: {
     name: string;
     status: string;
     description: string;
+    userId: string;
+  };
+};
+
+type ProjectUpdateInput = {
+  id: string;
+  input: {
+    name?: string;
+    status?: string;
+    description?: string;
     userId: string;
   };
 };
@@ -39,7 +50,7 @@ const createProject = async (_: any, args: ProjectInput) => {
 const getProjects = async () => {
   const projectsWithUserData = await prismaClient.project.findMany({
     include: {
-      user: true, // Include all fields from the User model
+      user: true,
     },
   });
   console.log("projectsWithUserData", projectsWithUserData);
@@ -47,13 +58,34 @@ const getProjects = async () => {
   return projectsWithUserData;
 };
 
-const getProjectById = async (_: any, args: string) => {
+const getProjectById = async (_: any, args: { id: string }) => {
+  const { id } = args;
   const project = await prismaClient.project.findUnique({
-    //@ts-expect-error
-    where: { id: args.id },
+    where: { id },
     include: { user: true },
   });
   return project;
 };
 
-export { createProject, getProjects, getProjectById };
+const updateProject = async (
+  _: any,
+  args: ProjectUpdateInput,
+  context: any
+) => {
+  console.log("args", args);
+  const { id } = args;
+  const { name, description, status, userId } = args.input;
+  checkAuthorization(context);
+  const updatedProject = await prismaClient.project.update({
+    where: { id },
+    data: {
+      name,
+      description,
+      status: status as ProjectStatusFile,
+      userId,
+    },
+  });
+  return updatedProject;
+};
+
+export { createProject, getProjects, getProjectById, updateProject };

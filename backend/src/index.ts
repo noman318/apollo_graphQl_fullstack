@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
-
+import JWT from "jsonwebtoken";
 import cors from "cors";
 import typeDefs from "./types/typeDefs";
 import resolvers from "./resolvers/resolvers";
@@ -29,7 +29,28 @@ async function startServer() {
     resolvers,
   });
   await server.start();
-  app.use("/graphql", expressMiddleware(server));
+  app.use(
+    "/graphql",
+    expressMiddleware(server, {
+      context: async ({ req }) => {
+        const token = req.headers.token;
+        if (!token) {
+          throw new Error("Unauthorized: Token missing");
+        }
+        try {
+          const decodedToken = JWT.verify(
+            token as string | "",
+            String(process.env.SECRET)
+          );
+          // console.log("decodedToken", decodedToken);
+          return decodedToken;
+        } catch (error) {
+          console.log("error", error);
+          return { message: "Unauthorized" };
+        }
+      },
+    })
+  );
   app.listen(PORT, () =>
     console.log(`Server running on Port with GraphQl ${PORT}`)
   );
