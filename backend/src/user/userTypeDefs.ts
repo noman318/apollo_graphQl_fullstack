@@ -44,13 +44,13 @@ const userTypeDefs = `
   type Query {
     getUsers: [User]
     getUserById(id: ID!): User
-    loginUser(input:UserCredentials!):String
     getCurrentUser: LoginUser
   }
 
   type Mutation {
     createUser(input: UserInput!): User
     deleteUser(input: String!): Int
+    loginUser(input:UserCredentials!):String
     updateUser(id:ID!,input: UserUpdateInput): User
   }
 `;

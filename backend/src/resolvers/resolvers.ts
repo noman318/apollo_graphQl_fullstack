@@ -18,7 +18,7 @@ const resolvers = {
   Query: {
     getUserById,
     getUsers,
-    loginUser,
+
     getProjects,
     getProjectById,
     getCurrentUser,
@@ -29,6 +29,7 @@ const resolvers = {
     createProject,
     deleteUser,
     updateProject,
+    loginUser,
   },
 };
 export default resolvers;

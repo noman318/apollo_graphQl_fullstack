@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Form } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
+import { Link } from "react-router-dom";
 
 const RegisterScreen = () => {
   return (
@@ -39,6 +40,7 @@ const RegisterScreen = () => {
           Regsiter
         </Button>
       </Form>
+      <Link to={`/login`}>Already Signed In ?</Link>
     </FormContainer>
   );
 };
