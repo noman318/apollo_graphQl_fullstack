@@ -29,6 +29,8 @@ const RegisterScreen = () => {
       confirmPassword === ""
     ) {
       return toast.error("Fill all the Fields to Register");
+    } else if (password !== confirmPassword) {
+      return toast.error("Passwords do not match");
     }
     try {
       let RegisteredThisUser = await createUser({
