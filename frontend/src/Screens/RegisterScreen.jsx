@@ -7,40 +7,75 @@ import { useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
 
 const RegisterScreen = () => {
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [age, setAge] = useState(0);
-  const [confirmPassword, setConfirmPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  // const [userName, setUserName] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [age, setAge] = useState(0);
+  // const [confirmPassword, setConfirmPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    userName: "",
+    password: "",
+    age: 0,
+    confirmPassword: "",
+  });
+  const {
+    email,
+    firstName,
+    lastName,
+    userName,
+    password,
+    age,
+    confirmPassword,
+  } = formData;
 
-  const [createUser, { data, loading, error }] = useMutation(REGISTER_USER);
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (
+  //     Object.values(formData).some((value) => value === "") ||
+  //     password !== confirmPassword
+  //   ) {
+  //     return toast.error(
+  //       "Fill all the Fields to Register or Passwords do not match"
+  //     );
+  //   }
+  // };
+
+  const [createUser, { loading, error }] = useMutation(REGISTER_USER);
   // console.log("data", data?.createUser);
 
   const registeredUser = async (e) => {
     e.preventDefault();
     if (
-      email === "" ||
-      firstName === "" ||
-      lastName === "" ||
-      userName === "" ||
-      password === "" ||
-      confirmPassword === ""
+      Object.values(formData).some((value) => value === "") ||
+      password !== confirmPassword
     ) {
-      return toast.error("Fill all the Fields to Register");
-    } else if (password !== confirmPassword) {
-      return toast.error("Passwords do not match");
+      return toast.error(
+        "Fill all the Fields to Register or Passwords do not match"
+      );
     }
+
     try {
       let RegisteredThisUser = await createUser({
         variables: {
           input: {
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
+            firstName,
+            lastName,
+            email,
             username: userName,
-            password: password,
+            password,
             age: parseInt(age),
           },
         },
@@ -61,70 +96,24 @@ const RegisterScreen = () => {
     <FormContainer>
       <h1>Sign Up</h1>
       <Form onSubmit={registeredUser}>
-        <Form.Group className="mb-2">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-2">
-          <Form.Label>First Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="First Name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-2">
-          <Form.Label>Last Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Last Name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-2">
-          <Form.Label>User Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="User Name"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-2">
-          <Form.Label>Age</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Age"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-2">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-2">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </Form.Group>
+        {Object.entries(formData).map(([key, value]) => (
+          <Form.Group key={key} className="mb-2">
+            <Form.Label>
+              {key.charAt(0).toUpperCase() + key.slice(1)}
+            </Form.Label>
+            <Form.Control
+              type={
+                key === "password" || key === "confirmPassword"
+                  ? "password"
+                  : "text"
+              }
+              placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+              name={key}
+              value={value}
+              onChange={handleChange}
+            />
+          </Form.Group>
+        ))}
         <Button variant="primary" type="submit" disabled={loading}>
           Regsiter
         </Button>
