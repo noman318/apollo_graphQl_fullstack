@@ -35,9 +35,9 @@ type ProjectUpdateInput = {
 
 const createUser = async (_: any, args: UserInput) => {
   // console.log("args", args.input);
-  const { firstName, lastName, email, username, password } = args.input;
+  const { firstName, lastName, email, username, password, age } = args.input;
   // console.log("firstName", firstName);
-  // console.log("process.env.SECRET", process.env.SECRET);
+
   const hashedPassword = createHmac("sha256", String(process.env.SECRET))
     .update(password)
     .digest("hex");
@@ -49,6 +49,7 @@ const createUser = async (_: any, args: UserInput) => {
       firstName,
       lastName,
       username,
+      age,
       password: hashedPassword,
     },
   });
@@ -69,7 +70,7 @@ const loginUser = async (_: any, args: Login) => {
     .digest("hex");
 
   if (usersHashedPassword !== user.password) {
-    throw Error("Invalid EMail or Password");
+    throw Error("Invalid Email or Password");
   } else {
     const token = jwt.sign(
       {

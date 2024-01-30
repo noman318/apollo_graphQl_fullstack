@@ -4,13 +4,15 @@ import FormContainer from "../components/FormContainer";
 import { useMutation } from "@apollo/client";
 import { Link, useNavigate } from "react-router-dom";
 import { LOGIN_USER } from "../mutations/userMutations";
+import { toast } from "react-toastify";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER);
-  console.log("data,loading,error", data, loading, error);
+  // console.log("data", data?.loginUser);
+
   const loginInUser = async (e) => {
     e.preventDefault();
     if (email === "" || password === "") {
@@ -24,10 +26,15 @@ const LoginScreen = () => {
             password: password,
           },
         },
+        onCompleted: (data) => {
+          // console.log("dataOnCompleted", data);
+          toast.success("Logged In");
+        },
       });
       console.log("signedUser", signedUser);
       // navigate("/");
-    } catch (error) {
+    } catch (errors) {
+      toast.error(errors.message);
       console.log("error", error);
     }
   };

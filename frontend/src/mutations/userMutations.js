@@ -5,4 +5,16 @@ const LOGIN_USER = gql`
     loginUser(input: $input)
   }
 `;
-export { LOGIN_USER };
+const REGISTER_USER = gql`
+  mutation createUser($input: UserInput!) {
+    createUser(input: $input) {
+      firstName
+      lastName
+      email
+      username
+      password
+      age
+    }
+  }
+`;
+export { LOGIN_USER, REGISTER_USER };

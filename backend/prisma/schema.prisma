@@ -16,7 +16,7 @@ model User {
   firstName   String @map("first_name")
   lastName    String? @map("last_name")
   username    String @map("user_name")
-  age         Int @default(0)
+  age         Int?
   profileImageUrl   String? @map("profile_image_url")
   password    String
   projects    Project[] 
