@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { REGISTER_USER } from "../mutations/userMutations";
 import { useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
@@ -14,15 +14,17 @@ const RegisterScreen = () => {
   // const [password, setPassword] = useState("");
   // const [age, setAge] = useState(0);
   // const [confirmPassword, setConfirmPassword] = useState("");
-  const [formData, setFormData] = useState({
+  const navigate = useNavigate();
+  const initialFormData = {
     email: "",
     firstName: "",
     lastName: "",
     userName: "",
-    password: "",
     age: 0,
+    password: "",
     confirmPassword: "",
-  });
+  };
+  const [formData, setFormData] = useState(initialFormData);
   const {
     email,
     firstName,
@@ -68,7 +70,7 @@ const RegisterScreen = () => {
     }
 
     try {
-      let RegisteredThisUser = await createUser({
+      await createUser({
         variables: {
           input: {
             firstName,
@@ -82,10 +84,13 @@ const RegisterScreen = () => {
         onCompleted: (data) => {
           // console.log("dataOnCompleted", data);
           toast.success("Registered");
+          setFormData(initialFormData);
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
         },
       });
-      console.log("RegisteredThisUser", RegisteredThisUser);
-      // navigate("/");
+      // console.log("RegisteredThisUser", RegisteredThisUser);
     } catch (errors) {
       toast.error(errors.message);
       console.log("error", error);
@@ -96,24 +101,28 @@ const RegisterScreen = () => {
     <FormContainer>
       <h1>Sign Up</h1>
       <Form onSubmit={registeredUser}>
-        {Object.entries(formData).map(([key, value]) => (
-          <Form.Group key={key} className="mb-2">
-            <Form.Label>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </Form.Label>
-            <Form.Control
-              type={
-                key === "password" || key === "confirmPassword"
-                  ? "password"
-                  : "text"
-              }
-              placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
-              name={key}
-              value={value}
-              onChange={handleChange}
-            />
-          </Form.Group>
-        ))}
+        {Object.entries(formData).map(([key, value]) => {
+          console.log("key", key);
+          console.log("value", value);
+          return (
+            <Form.Group key={key} className="mb-2">
+              <Form.Label>
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </Form.Label>
+              <Form.Control
+                type={
+                  key === "password" || key === "confirmPassword"
+                    ? "password"
+                    : "text"
+                }
+                placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+                name={key}
+                value={value}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          );
+        })}
         <Button variant="primary" type="submit" disabled={loading}>
           Regsiter
         </Button>

@@ -29,6 +29,9 @@ const LoginScreen = () => {
         onCompleted: (data) => {
           // console.log("dataOnCompleted", data);
           toast.success("Logged In");
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
         },
       });
       console.log("signedUser", signedUser);

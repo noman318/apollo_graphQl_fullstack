@@ -20,8 +20,21 @@ model User {
   profileImageUrl   String? @map("profile_image_url")
   password    String
   projects    Project[] 
+  client      Client[]
 
   @@map("users")
+}
+
+model Client {
+  id      String   @id @default(uuid())
+  email   String   @unique
+  name   String
+  phone    String
+  projects    Project[]
+  userId       String 
+  user         User     @relation(fields: [userId], references: [id])
+
+  @@map("clients")
 }
 
 model Project {
@@ -29,8 +42,12 @@ model Project {
   name         String   @map("project_name")
   description  String
   status       ProjectStatus   @map("project_status") @default(NotStarted)
+  
   userId       String
   user         User     @relation(fields: [userId], references: [id])
+
+  clientId String
+  client Client @relation(fields: [clientId],references: [id])
 
   @@map("projects")
 }

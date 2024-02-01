@@ -8,6 +8,7 @@ type ProjectInput = {
     status: string;
     description: string;
     userId: string;
+    clientId: string;
   };
 };
 
@@ -18,6 +19,7 @@ type ProjectUpdateInput = {
     status?: string;
     description?: string;
     userId: string;
+    clientId: string;
   };
 };
 
@@ -30,7 +32,7 @@ const ProjectStatusStrings = {
 type ProjectStatusFile = keyof typeof ProjectStatusStrings;
 
 const createProject = async (_: any, args: ProjectInput) => {
-  const { name, status, description, userId } = args.input;
+  const { name, status, description, userId, clientId } = args.input;
   try {
     const project = await prismaClient.project.create({
       data: {
@@ -38,6 +40,7 @@ const createProject = async (_: any, args: ProjectInput) => {
         status: status as ProjectStatusFile,
         description,
         userId,
+        clientId,
       },
     });
     // console.log("project", project);
@@ -74,7 +77,7 @@ const updateProject = async (
 ) => {
   console.log("args", args);
   const { id } = args;
-  const { name, description, status, userId } = args.input;
+  const { name, description, status, userId, clientId } = args.input;
   checkAuthorization(context);
   const updatedProject = await prismaClient.project.update({
     where: { id },
@@ -83,6 +86,7 @@ const updateProject = async (
       description,
       status: status as ProjectStatusFile,
       userId,
+      clientId,
     },
   });
   return updatedProject;

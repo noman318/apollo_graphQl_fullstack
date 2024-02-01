@@ -1,4 +1,9 @@
 import {
+  createClient,
+  deleteClient,
+  updateClient,
+} from "../client/clientResolvers";
+import {
   createProject,
   getProjectById,
   getProjects,
@@ -26,10 +31,15 @@ const resolvers = {
   Mutation: {
     createUser,
     updateUser,
-    createProject,
-    deleteUser,
-    updateProject,
     loginUser,
+    deleteUser,
+
+    createProject,
+    updateProject,
+
+    createClient,
+    updateClient,
+    deleteClient,
   },
 };
 export default resolvers;

@@ -6,7 +6,7 @@ import Header from "./components/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
