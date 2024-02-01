@@ -102,8 +102,8 @@ const RegisterScreen = () => {
       <h1>Sign Up</h1>
       <Form onSubmit={registeredUser}>
         {Object.entries(formData).map(([key, value]) => {
-          console.log("key", key);
-          console.log("value", value);
+          // console.log("key", key);
+          // console.log("value", value);
           return (
             <Form.Group key={key} className="mb-2">
               <Form.Label>

@@ -78,7 +78,6 @@ const AddClientModal = () => {
                   <Form.Control
                     type="text"
                     placeholder={key?.charAt(0)?.toUpperCase() + key.slice(1)}
-                    autoFocus
                     name={key}
                     value={value}
                     onChange={handleChange}
