@@ -1,6 +1,8 @@
 import {
   createClient,
   deleteClient,
+  getAllClients,
+  getClientById,
   updateClient,
 } from "../client/clientResolvers";
 import {
@@ -27,6 +29,9 @@ const resolvers = {
     getProjects,
     getProjectById,
     getCurrentUser,
+
+    getAllClients,
+    getClientById,
   },
   Mutation: {
     createUser,

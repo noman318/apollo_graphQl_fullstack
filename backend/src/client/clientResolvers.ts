@@ -19,6 +19,19 @@ type ClientUpdateInput = {
   };
 };
 
+const getAllClients = async (_: any, args: any) => {
+  const allClients = await prismaClient.client.findMany({});
+  console.log("allClients", allClients);
+  return allClients;
+};
+
+const getClientById = async (_: any, args: { id: string }) => {
+  const client = await prismaClient.client.findUnique({
+    where: { id: args.id },
+  });
+  return client;
+};
+
 const createClient = async (_: any, args: ClientInput) => {
   //   console.log("args", args);
   const { name, email, phone, userId } = args.input;
@@ -60,4 +73,10 @@ const updateClient = async (_: any, args: ClientUpdateInput) => {
   return updatedUser;
 };
 
-export { createClient, deleteClient, updateClient };
+export {
+  createClient,
+  deleteClient,
+  updateClient,
+  getAllClients,
+  getClientById,
+};

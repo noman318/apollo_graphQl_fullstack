@@ -22,7 +22,7 @@ const clientTypeDefs = `
   }
 
   type Query {
-    getClients: [Client]
+    getAllClients: [Client]
     getClientById(id: ID!): Client
   }
 
