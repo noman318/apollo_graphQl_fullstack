@@ -4,15 +4,17 @@ import { useMutation, useQuery } from "@apollo/client";
 import { toast } from "react-toastify";
 import { GET_ALL_USERS } from "../queries/userQueries";
 import { ADD_NEW_CLIENT } from "../mutations/clientMutations";
+import { GET_ALL_CLIENTS } from "../queries/clientQueries";
 const AddClientModal = () => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const [formData, setFormData] = useState({
+  const initialForm = {
     email: "",
     name: "",
     phone: "",
-  });
+  };
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [formData, setFormData] = useState(initialForm);
   const { email, name, phone } = formData;
   const [userId, setUserId] = useState("");
   const { data } = useQuery(GET_ALL_USERS);
@@ -33,7 +35,17 @@ const AddClientModal = () => {
             userId,
           },
         },
+        update(cache, { data: { createClient } }) {
+          const { getAllClients } = cache.readQuery({
+            query: GET_ALL_CLIENTS,
+          });
+          cache.writeQuery({
+            query: GET_ALL_CLIENTS,
+            data: { getAllClients: [...getAllClients, createClient] },
+          });
+        },
       });
+      setFormData(initialForm);
       toast.success("Client Added");
     } catch (errors) {
       console.log("errors", errors);
