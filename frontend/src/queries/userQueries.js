@@ -5,4 +5,16 @@ const LOGIN = gql`
     loginUser(input: $input)
   }
 `;
-export { LOGIN };
+
+const GET_ALL_USERS = gql`
+  query GetUsers {
+    getUsers {
+      id
+      lastName
+      email
+      firstName
+      username
+    }
+  }
+`;
+export { LOGIN, GET_ALL_USERS };
