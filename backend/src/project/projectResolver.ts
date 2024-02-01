@@ -7,7 +7,6 @@ type ProjectInput = {
     name: string;
     status: string;
     description: string;
-    userId: string;
     clientId: string;
   };
 };
@@ -18,7 +17,6 @@ type ProjectUpdateInput = {
     name?: string;
     status?: string;
     description?: string;
-    userId: string;
     clientId: string;
   };
 };
@@ -32,14 +30,13 @@ const ProjectStatusStrings = {
 type ProjectStatusFile = keyof typeof ProjectStatusStrings;
 
 const createProject = async (_: any, args: ProjectInput) => {
-  const { name, status, description, userId, clientId } = args.input;
+  const { name, status, description, clientId } = args.input;
   try {
     const project = await prismaClient.project.create({
       data: {
         name,
         status: status as ProjectStatusFile,
         description,
-        userId,
         clientId,
       },
     });
@@ -53,7 +50,7 @@ const createProject = async (_: any, args: ProjectInput) => {
 const getProjects = async () => {
   const projectsWithUserData = await prismaClient.project.findMany({
     include: {
-      user: true,
+      client: true,
     },
   });
   console.log("projectsWithUserData", projectsWithUserData);
@@ -65,7 +62,7 @@ const getProjectById = async (_: any, args: { id: string }) => {
   const { id } = args;
   const project = await prismaClient.project.findUnique({
     where: { id },
-    include: { user: true },
+    include: { client: true },
   });
   return project;
 };
@@ -77,7 +74,7 @@ const updateProject = async (
 ) => {
   console.log("args", args);
   const { id } = args;
-  const { name, description, status, userId, clientId } = args.input;
+  const { name, description, status, clientId } = args.input;
   checkAuthorization(context);
   const updatedProject = await prismaClient.project.update({
     where: { id },
@@ -85,11 +82,23 @@ const updateProject = async (
       name,
       description,
       status: status as ProjectStatusFile,
-      userId,
       clientId,
     },
   });
   return updatedProject;
 };
 
-export { createProject, getProjects, getProjectById, updateProject };
+const deleteProject = async (_: any, args: { id: string }) => {
+  const deletedProject = await prismaClient.project.delete({
+    where: { id: args.id },
+  });
+  return deletedProject;
+};
+
+export {
+  createProject,
+  getProjects,
+  getProjectById,
+  updateProject,
+  deleteProject,
+};

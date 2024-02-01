@@ -7,6 +7,7 @@ import {
 } from "../client/clientResolvers";
 import {
   createProject,
+  deleteProject,
   getProjectById,
   getProjects,
   updateProject,
@@ -41,6 +42,7 @@ const resolvers = {
 
     createProject,
     updateProject,
+    deleteProject,
 
     createClient,
     updateClient,

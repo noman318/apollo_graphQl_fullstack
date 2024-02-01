@@ -19,7 +19,6 @@ model User {
   age         Int?
   profileImageUrl   String? @map("profile_image_url")
   password    String
-  projects    Project[] 
   client      Client[]
 
   @@map("users")
@@ -42,9 +41,6 @@ model Project {
   name         String   @map("project_name")
   description  String
   status       ProjectStatus   @map("project_status") @default(NotStarted)
-  
-  userId       String
-  user         User     @relation(fields: [userId], references: [id])
 
   clientId String
   client Client @relation(fields: [clientId],references: [id])

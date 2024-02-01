@@ -4,21 +4,29 @@ const projectTypeDefs = `
     name: String!
     status: String!
     description: String
-    user: User
+    client: Client
+  }
+
+  type ProjectADD {
+    id: ID!
+    name: String!
+    status: String!
+    description: String
+    clientId: ID
   }
 
   input ProjectInput {
     name: String!
     status: String!
     description: String
-    userId: ID!
+    clientId: ID!
   }
 
   input ProjectUpdateInput {
     name: String
     status: String
     description: String
-    userId: ID!
+    clientId: ID!
   }
 
   type Query {
@@ -27,8 +35,9 @@ const projectTypeDefs = `
   }
 
   type Mutation {
-    createProject(input: ProjectInput!): Project
+    createProject(input: ProjectInput!): ProjectADD
     updateProject(id:ID!,input: ProjectUpdateInput): Project
+    deleteProject(id:ID!):Project
   }
 `;
 
