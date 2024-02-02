@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import { useMutation, useQuery } from "@apollo/client";
 import { toast } from "react-toastify";
+import { GoProjectRoadmap } from "react-icons/go";
+
 const AddProjectModal = () => {
   const initialForm = {
     email: "",
@@ -33,8 +35,9 @@ const AddProjectModal = () => {
   };
   return (
     <React.Fragment>
-      <Button variant="primary" onClick={handleShow}>
-        Add new Client
+      <Button variant="dark" className="mx-3" onClick={handleShow}>
+        <GoProjectRoadmap style={{ marginRight: "10px" }} />
+        Add new Project
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

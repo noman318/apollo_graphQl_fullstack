@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import { useMutation, useQuery } from "@apollo/client";
 import { toast } from "react-toastify";
+import { IoPersonAddSharp } from "react-icons/io5";
 import { GET_ALL_USERS } from "../queries/userQueries";
 import { ADD_NEW_CLIENT } from "../mutations/clientMutations";
 import { GET_ALL_CLIENTS } from "../queries/clientQueries";
@@ -60,7 +61,8 @@ const AddClientModal = () => {
   };
   return (
     <React.Fragment>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="info" onClick={handleShow}>
+        <IoPersonAddSharp style={{ marginRight: "10px" }} />
         Add new Client
       </Button>
       <Modal show={show} onHide={handleClose}>
