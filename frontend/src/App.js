@@ -8,6 +8,7 @@ import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProjectScreen from "./Screens/ProjectScreen";
 
 function App() {
   let __DEV__ = true;
@@ -60,6 +61,7 @@ function App() {
               <Route path="/" element={<HomeScreen />} />
               <Route path="/login" element={<LoginScreen />} />
               <Route path="/register" element={<RegisterScreen />} />
+              <Route path="/view/:id" element={<ProjectScreen />} />
             </Routes>
           </Router>
         </div>

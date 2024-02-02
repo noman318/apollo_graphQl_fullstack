@@ -10,6 +10,7 @@ const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER);
   // console.log("data", data?.loginUser);
 
@@ -19,7 +20,7 @@ const LoginScreen = () => {
       return alert("Fill all the Fields to Sign In");
     }
     try {
-      let signedUser = await loginUser({
+      await loginUser({
         variables: {
           input: {
             email: email,
@@ -28,13 +29,16 @@ const LoginScreen = () => {
         },
         onCompleted: (data) => {
           // console.log("dataOnCompleted", data);
+          const token = data?.loginUser;
+          // console.log("token", token);
+          localStorage.setItem("token", token);
           toast.success("Logged In");
           setTimeout(() => {
             navigate("/");
           }, 3000);
         },
       });
-      console.log("signedUser", signedUser);
+      // console.log("signedUser", signedUser);
       // navigate("/");
     } catch (errors) {
       toast.error(errors.message);

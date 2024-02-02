@@ -4,7 +4,7 @@ import { FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const ProjectCards = ({ projects }) => {
-  console.log("projects", projects);
+  // console.log("projects", projects);
   return (
     <Card className="m-3 d-flex flex-row align-items-center">
       <Card.Body>

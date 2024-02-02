@@ -26,7 +26,7 @@ const projectTypeDefs = `
     name: String
     status: String
     description: String
-    clientId: ID!
+    clientId: ID
   }
 
   type Query {

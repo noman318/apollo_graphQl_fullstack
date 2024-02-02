@@ -12,4 +12,22 @@ const CREATE_NEW_PROJECT = gql`
   }
 `;
 
-export { CREATE_NEW_PROJECT };
+const UPDATE_PROJECT = gql`
+  mutation Mutation($updateProjectId: ID!, $input: ProjectUpdateInput) {
+    updateProject(id: $updateProjectId, input: $input) {
+      name
+      id
+      status
+      description
+      client {
+        id
+        name
+        email
+        phone
+        userId
+      }
+    }
+  }
+`;
+
+export { CREATE_NEW_PROJECT, UPDATE_PROJECT };

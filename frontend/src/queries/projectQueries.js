@@ -15,4 +15,22 @@ const GET_ALL_PROJECTS = gql`
   }
 `;
 
-export { GET_ALL_PROJECTS };
+const GET_SINGLE_PROJECT = gql`
+  query GetProjectById($getProjectByIdId: ID!) {
+    getProjectById(id: $getProjectByIdId) {
+      id
+      name
+      status
+      description
+      client {
+        name
+        email
+        phone
+        userId
+        id
+      }
+    }
+  }
+`;
+
+export { GET_ALL_PROJECTS, GET_SINGLE_PROJECT };
