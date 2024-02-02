@@ -7,6 +7,7 @@ const CREATE_NEW_PROJECT = gql`
       name
       status
       description
+      clientId
     }
   }
 `;
