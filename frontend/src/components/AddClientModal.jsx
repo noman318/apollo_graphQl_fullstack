@@ -61,9 +61,9 @@ const AddClientModal = () => {
   };
   return (
     <React.Fragment>
-      <Button variant="info" onClick={handleShow}>
+      <Button variant="secondary" onClick={handleShow}>
         <IoPersonAddSharp style={{ marginRight: "10px" }} />
-        Add new Client
+        New Client
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -103,11 +103,14 @@ const AddClientModal = () => {
               <Form.Control as="textarea" rows={3} />
             </Form.Group> */}
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
+              <Button
+                variant="btn-secondary border border-2"
+                onClick={handleClose}
+              >
                 Close
               </Button>
               <Button
-                variant="primary"
+                variant="dark"
                 onClick={handleClose}
                 disabled={loading}
                 type="submit"

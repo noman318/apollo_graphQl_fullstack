@@ -113,11 +113,14 @@ const AddProjectModal = () => {
               </Form.Select>
             </Form.Group>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
+              <Button
+                variant="btn-secondary border border-2"
+                onClick={handleClose}
+              >
                 Close
               </Button>
               <Button
-                variant="primary"
+                variant="dark"
                 onClick={handleClose}
                 disabled={loading}
                 type="submit"
